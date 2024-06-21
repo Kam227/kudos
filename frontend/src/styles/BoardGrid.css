@@ -1,0 +1,58 @@
+.overlay {
+    background-color: white;
+    padding: 10px;
+}
+
+.board-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 5fr));
+}
+
+.categories {
+    display: flex;
+    justify-content: center;
+}
+
+.categories p {
+    margin: 10px;
+    border: 1px solid black;
+    border-radius: 20px;
+    min-width: 100px;
+}
+
+.new-board {
+    margin-bottom: 10px;
+}
+
+.modal {
+    display: flex;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 80%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+ }
+ .modal-content {
+    display: flex;
+    margin: 15% auto;
+    padding: 20px;
+    width: 80%;
+ }
+
+ .modal-content input {
+    margin-bottom: 20px;
+ }
+
+ .modal-content select {
+    margin-bottom: 20px;
+ }
+
+
+
+ .close {
+    display: flex;
+    justify-content: top;
+ }
