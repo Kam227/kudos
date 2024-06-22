@@ -65,4 +65,5 @@ N/A
 ### Shout out
 
 Give a shout out to somebody from your cohort that especially helped you during your project. This can be a fellow peer, instructor, TA, mentor, etc.
+
 Shout out to Fanuel Dana for helping me get the GIPHY API up and running.
