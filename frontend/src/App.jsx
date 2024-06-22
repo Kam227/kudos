@@ -13,7 +13,15 @@ function App() {
                     <div>
                         <h1 className="header">Kudoboard</h1>
                         <BoardGrid />
-                        <p className="footer">© 2024 Kudoboard</p>
+                        <footer className="footer">
+                            <p>© 2024 Kudoboard</p>
+                            <p>Contact us: <a href="mailto:support@kudoboard.com">support@kudoboard.com</a> | Phone: <a href="tel:+1234567890">+1 (123) 456-7890</a></p>
+                            <p>Follow us:
+                                <a href="https://nowhere.com/kudoboard">Facebook</a> |
+                                <a href="https://nowhere.com/kudoboard">Twitter</a> |
+                                <a href="https://nowhere.com/kudoboard">Instagram</a>
+                            </p>
+                        </footer>
                     </div>
                 }/>
                 <Route path='/:id' element={<BoardPageRoute />} />

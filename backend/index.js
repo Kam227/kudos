@@ -64,7 +64,13 @@ app.get('/:id', cors(), async (req, res) => {
     try {
         const board = await prisma.board.findUnique({
             where: { id: parseInt(id, 10) },
-            include: { cards: true },
+            include: {
+                cards: {
+                    include: {
+                        comments: true,
+                    },
+                },
+            },
         });
         if (!board) {
             return res.status(404).json({ error: 'Board not found' });
@@ -122,5 +128,22 @@ app.delete('/cards/:cardId', cors(), async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Failed to delete card' });
+    }
+});
+
+app.post('/cards/:cardId/comments', cors(), async (req, res) => {
+    const { cardId } = req.params;
+    const { message } = req.body;
+    try {
+        const newComment = await prisma.comment.create({
+            data: {
+                message,
+                cardId: parseInt(cardId, 10),
+            },
+        });
+        res.json(newComment);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Failed to create comment' });
     }
 });

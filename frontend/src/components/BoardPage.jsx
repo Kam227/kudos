@@ -12,6 +12,8 @@ const BoardPage = (props) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [newCardModalOpen, setNewCardModalOpen] = useState(false);
     const [selectedGif, setSelectedGif] = useState('');
+    const [isCommenting, setIsCommenting] = useState(false);
+    const [activeCardId, setActiveCardId] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -25,7 +27,11 @@ const BoardPage = (props) => {
                 throw new Error('Failed to fetch board');
             }
             const boardData = await response.json();
-            setCards(boardData.cards || []);
+            const cardsWithComments = (boardData.cards || []).map(card => ({
+                ...card,
+                comments: card.comments || [],
+            }));
+            setCards(cardsWithComments);
         } catch (error) {
             console.error(error);
             setCards([]);
@@ -122,6 +128,35 @@ const BoardPage = (props) => {
         setSelectedGif(gifUrl);
     }
 
+    const openComments = (cardId) => {
+        setIsCommenting(true);
+        setActiveCardId(cardId);
+    }
+
+    const closeComments = () => {
+        setIsCommenting(false);
+        setActiveCardId(null);
+    }
+
+    const submitComment = async (cardId, comment) => {
+        try {
+            const response = await fetch(`http://localhost:3000/cards/${cardId}/comments`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(comment)
+            });
+            if (!response.ok) {
+                throw new Error('Failed to create comment');
+            }
+            const newComment = await response.json();
+            setCards(cards.map(card => card.id === cardId ? { ...card, comments: [...card.comments, newComment] } : card));
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     return (
         <div>
             <div className="go-back" onClick={() => navigate('/')}>
@@ -180,26 +215,58 @@ const BoardPage = (props) => {
 
             <div className="card-list">
                 {Array.isArray(cards) && cards.map((card) => (
-                    <div key={card.id} className="card">
-                        <p>Title: {card.title}</p>
-                        <p>Description: {card.description}</p>
-                        <p>Author: {card.author}</p>
-                        <img src={card.gif} alt={card.title} />
-                        <div className="upvote-section">
-                            <button onClick={() => upvoteCard(card.id)}>Upvote</button>
-                            <span>{card.upvotes} Upvotes</span>
+                    <div key={card.id}>
+                        <div className="card" onClick={() => openComments(card.id)}>
+                            <p>Title: {card.title}</p>
+                            <p>Description: {card.description}</p>
+                            <p>Author: {card.author}</p>
+                            <img src={card.gif} alt={card.title} />
+                            <div className="upvote-section">
+                                <button onClick={() => upvoteCard(card.id)}>Upvote</button>
+                                <span>{card.upvotes} Upvotes</span>
+                            </div>
+                            <button className="delete-button" onClick={() => deleteCard(card.id)}>Delete</button>
                         </div>
-                        <button className="delete-button" onClick={() => deleteCard(card.id)}>Delete</button>
+                        <div>
+                            {isCommenting && activeCardId === card.id && (
+                                <div className="comments">
+                                    <IoMdClose className="close" onClick={closeComments} />
+                                    <h2>Comments</h2>
+                                    <div>
+                                        {card.comments.map((comment) => (
+                                            <div key={comment.id} className="comment">{comment.message}</div>
+                                        ))}
+                                    </div>
+                                    <form
+                                        onSubmit={(e) => {
+                                            e.preventDefault();
+                                            const formData = {
+                                                message: e.target.message.value,
+                                            };
+                                            submitComment(card.id, formData);
+                                        }}>
+                                        <input className="comment-input" type="text" name="message" placeholder="Leave a comment..." required />
+                                        <button type="submit" className="comment-button">Submit</button>
+                                    </form>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 ))}
             </div>
 
-            <div className="footer">
+            <footer className="footer">
                 <p>© 2024 Kudoboard</p>
-            </div>
+                <p>Contact us: <a href="mailto:support@kudoboard.com">support@kudoboard.com</a> | Phone: <a href="tel:+1234567890">+1 (123) 456-7890</a></p>
+                <p>Follow us:
+                <a href="https://nowhere.com/kudoboard">Facebook</a> |
+                <a href="https://nowhere.com/kudoboard">Twitter</a> |
+                <a href="https://nowhere.com/kudoboard">Instagram</a>
+                </p>
+            </footer>
         </div>
     );
-};
+}
 
 BoardPage.propTypes = {
     title: PropTypes.string.isRequired,

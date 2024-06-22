@@ -11,7 +11,23 @@
   left: 0;
   bottom: 0;
   width: 100%;
-  background-color: #ccf3f8;
+  background-color: white;
   color: black;
   text-align: center;
+  padding: 10px;
+  box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+}
+
+.footer a {
+  color: #007bff;
+  text-decoration: none;
+  margin: 0 5px;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+.footer p {
+  margin: 5px 0;
 }
