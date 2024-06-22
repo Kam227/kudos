@@ -37,8 +37,8 @@ Backend: [https://kudos-fqvu.onrender.com](ADD_LINK_HERE)
 #### STRETCH FEATURES
 
 
-- [] **Deployment**
-  - [ ] Website is deployed via Render.
+- [x] **Deployment**
+  - [x] Website is deployed via Render.
 - [x] **Comments**
   - [x] Users should be able to comment on cards.
 
