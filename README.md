@@ -2,7 +2,10 @@
 
 Submitted by: **Kam Williams**
 
-Deployed Application (optional): [Kudos Board Deployed Site](ADD_LINK_HERE)
+Deployed Application (optional): 
+
+Frontend: [https://kudos-frontend.onrender.com](ADD_LINK_HERE)
+Backend: [https://kudos-fqvu.onrender.com](ADD_LINK_HERE)
 
 ### Application Features
 
