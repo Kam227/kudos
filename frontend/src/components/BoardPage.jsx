@@ -206,7 +206,7 @@ const BoardPage = (props) => {
                                 </div>
                             )}
 
-                            <input type="text" name="author" placeholder="Card author" required />
+                            <input type="text" name="author" placeholder="Card author (optional)" />
                             <button type="submit">Create Card</button>
                         </form>
                     </div>
@@ -214,13 +214,14 @@ const BoardPage = (props) => {
             )}
 
             <div className="card-list">
-                {Array.isArray(cards) && cards.map((card) => (
+                {Array.isArray(cards) && cards?.map((card) => (
+                    card && (
                     <div key={card.id}>
-                        <div className="card" onClick={() => openComments(card.id)}>
+                        <div className="card">
                             <p>Title: {card.title}</p>
                             <p>Description: {card.description}</p>
                             <p>Author: {card.author}</p>
-                            <img src={card.gif} alt={card.title} />
+                            <img src={card.gif} alt={card.title} onClick={() => openComments(card.id)}/>
                             <div className="upvote-section">
                                 <button onClick={() => upvoteCard(card.id)}>Upvote</button>
                                 <span>{card.upvotes} Upvotes</span>
@@ -233,7 +234,7 @@ const BoardPage = (props) => {
                                     <IoMdClose className="close" onClick={closeComments} />
                                     <h2>Comments</h2>
                                     <div>
-                                        {card.comments.map((comment) => (
+                                        {card.comments?.map((comment) => (
                                             <div key={comment.id} className="comment">{comment.message}</div>
                                         ))}
                                     </div>
@@ -252,6 +253,7 @@ const BoardPage = (props) => {
                             )}
                         </div>
                     </div>
+                    )
                 ))}
             </div>
 
