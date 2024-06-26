@@ -37,15 +37,15 @@ Backend: [https://kudos-fqvu.onrender.com](ADD_LINK_HERE)
 #### STRETCH FEATURES
 
 
-- [x] **Deployment**
-  - [x] Website is deployed via Render.
+- [ ] **Deployment**
+  - [ ] Website is deployed via Render.
 - [x] **Comments**
   - [x] Users should be able to comment on cards.
 
 
 ### Walkthrough Video
 
-`https://drive.google.com/file/d/1Ig519EhZWAy32Ecsb1iU55BnDeykyJpo/view?usp=sharing`
+`https://drive.google.com/file/d/1IusfprWEwwKllLfK6-hEQFljuqhqVnk6/view?usp=sharing`
 
 ### Reflection
 
